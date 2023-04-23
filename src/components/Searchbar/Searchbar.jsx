@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 export class Searchbar extends React.Component {
   state = {
     query: '',
+    page: 1,
   };
 
   handleQueryChange = evt => {
@@ -17,6 +18,7 @@ export class Searchbar extends React.Component {
       alert('Enter your request');
       return;
     }
+
     this.props.onSubmit(this.state.query);
     this.setState({ query: '' });
   };
@@ -45,5 +47,5 @@ export class Searchbar extends React.Component {
   }
 }
 Searchbar.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
 };
