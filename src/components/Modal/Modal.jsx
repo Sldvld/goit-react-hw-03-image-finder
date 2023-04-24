@@ -1,13 +1,11 @@
-import PropTypes from 'prop-types';
+import css from './Modal.module.css';
 import React from 'react';
 import { createPortal } from 'react-dom';
+import PropTypes from 'prop-types';
+
+const modalRoot = document.querySelector('#modal-root');
 
 export class Modal extends React.Component {
-  static propTypes = {
-    descr: PropTypes.string.isRequired,
-    link: PropTypes.string.isRequired,
-    onClose: PropTypes.func.isRequired,
-  };
   componentDidMount() {
     window.addEventListener('keydown', this.closeOnEsc);
   }
@@ -22,27 +20,23 @@ export class Modal extends React.Component {
     }
     this.props.closeModal();
   };
-  backdropClick = evt => {
-    if (evt.currentTarget === evt.target) {
-      this.props.closeModal();
-    }
-  };
 
   render() {
-    const { link, descr } = this.props;
+    const { closeModal, largeModalImageURL, tags } = this.props;
+
     return createPortal(
-      <div className="" onClick={this.backdropClick}>
-        <div className="">
-          <img src={link} alt={descr} />
+      <div className={css.overlay} onClick={closeModal}>
+        <div className={css.modal}>
+          <img src={largeModalImageURL} alt={tags} />
         </div>
       </div>,
-      document.getElementById('modal-root')
+      modalRoot
     );
   }
 }
 
 Modal.propTypes = {
-  descr: PropTypes.any,
-  link: PropTypes.any,
-  onClose: PropTypes.func,
+  closeModal: PropTypes.func.isRequired,
+  largeModalImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
 };

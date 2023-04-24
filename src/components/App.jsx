@@ -3,7 +3,9 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 import { FetchImages } from '../Api/FetchImages';
 import { Button } from './Button/Button';
-// import { Loader } from './Loader/Loader';
+import { Loader } from '../Loader/Loader';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import css from '../components/App.module.css';
 
 export class App extends React.Component {
   state = {
@@ -26,7 +28,7 @@ export class App extends React.Component {
           this.state.page
         );
         if (totalHits === 0) {
-          alert('Nothing was found for your request');
+          Notify.failure('Nothing was found for your request');
           this.setState({ loading: false });
           return;
         }
@@ -39,7 +41,7 @@ export class App extends React.Component {
         }));
         this.setState({ loading: false });
       } catch (error) {
-        alert('Something went wrong');
+        Notify.failure('Something went wrong');
       }
     }
   }
@@ -55,14 +57,14 @@ export class App extends React.Component {
   render() {
     const { images, totalHits, loading } = this.state;
     return (
-      <>
+      <div className={css.app}>
         <Searchbar onSubmit={this.handleFormSubmit} />
         {images && <ImageGallery images={images} />}
         {!loading && images.length > 0 && totalHits > images.length && (
           <Button loadMore={this.handleLoadMore} />
         )}
-        {/* {loading && <Loader />} */}
-      </>
+        {loading && <Loader />}
+      </div>
     );
   }
 }

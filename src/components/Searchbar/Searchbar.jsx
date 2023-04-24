@@ -1,5 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import css from './Searchbar.module.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { ReactComponent as IconInput } from '../../Icon/searchIcon.svg';
 
 export class Searchbar extends React.Component {
   state = {
@@ -15,7 +18,7 @@ export class Searchbar extends React.Component {
     evt.preventDefault();
 
     if (this.state.query.trim() === '') {
-      alert('Enter your request');
+      Notify.warning('Enter your request');
       return;
     }
 
@@ -25,14 +28,15 @@ export class Searchbar extends React.Component {
   render() {
     return (
       <>
-        <header className="searchbar">
-          <form onSubmit={this.handleSubmit} className="form">
-            <button type="submit" className="button">
-              <span className="button-label">Search</span>
+        <header className={css.searchbar}>
+          <form onSubmit={this.handleSubmit} className={css.searchForm}>
+            <button type="submit" className={css.searchFormButton}>
+              <span className={css.searchFormButtonLabel}>Search</span>
+              <IconInput width="25px" height="25px" />
             </button>
 
             <input
-              className="input"
+              className={css.searchFormInput}
               type="text"
               autoComplete="off"
               autoFocus
