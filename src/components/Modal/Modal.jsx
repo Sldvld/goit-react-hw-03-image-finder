@@ -20,12 +20,17 @@ export class Modal extends React.Component {
     }
     this.props.closeModal();
   };
+  handleBackdropClick = e => {
+    if (e.currentTarget === e.target) {
+      this.props.closeModal();
+    }
+  };
 
   render() {
     const { closeModal, largeModalImageURL, tags } = this.props;
 
     return createPortal(
-      <div className={css.overlay} onClick={closeModal}>
+      <div className={css.overlay} onClick={this.handleBackdropClick}>
         <div className={css.modal}>
           <img src={largeModalImageURL} alt={tags} />
         </div>
