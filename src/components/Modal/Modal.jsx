@@ -15,7 +15,7 @@ export class Modal extends React.Component {
   }
 
   closeOnEsc = e => {
-    if (e.code !== 'Escape') {
+    if (e.code === 'Escape') {
       return;
     }
     this.props.closeModal();
